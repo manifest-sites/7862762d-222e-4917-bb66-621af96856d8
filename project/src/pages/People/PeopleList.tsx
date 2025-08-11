@@ -24,7 +24,7 @@ import {
   ImportOutlined,
   ExportOutlined,
 } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Person } from '../../entities/Person';
 import { Tag as TagEntity } from '../../entities/Tag';
 import { ProfileFieldDef } from '../../entities/ProfileFieldDef';
@@ -44,6 +44,7 @@ interface PeopleFilters {
 
 const PeopleList: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { userRole } = useAuth();
   const [people, setPeople] = useState<PersonType[]>([]);
   const [tags, setTags] = useState<TagType[]>([]);
@@ -61,6 +62,14 @@ const PeopleList: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // Initialize filters from URL parameters
+  useEffect(() => {
+    const tagIds = searchParams.get('tagIds');
+    if (tagIds) {
+      setFilters(prev => ({ ...prev, tagIds: [tagIds] }));
+    }
+  }, [searchParams]);
 
   const fetchData = async () => {
     try {
@@ -114,7 +123,7 @@ const PeopleList: React.FC = () => {
 
     // Tags filter
     if (filters.tagIds && filters.tagIds.length > 0) {
-      const hasMatchingTag = filters.tagIds.some(tagId => person.tagIds.includes(tagId));
+      const hasMatchingTag = filters.tagIds.some(tagId => person.tagIds?.includes(tagId));
       if (!hasMatchingTag) return false;
     }
 
