@@ -87,11 +87,14 @@ const PersonForm: React.FC<PersonFormProps> = ({ mode }) => {
           };
           
           // Convert date fields to dayjs objects
-          fieldsData.forEach((field: ProfileFieldDefType) => {
-            if (field.type === 'date' && formValues.fields[field.key]) {
-              formValues.fields[field.key] = dayjs(formValues.fields[field.key]);
-            }
-          });
+          if (fieldsResponse.success) {
+            const fieldsData = Array.isArray(fieldsResponse.data) ? fieldsResponse.data : [fieldsResponse.data];
+            fieldsData.forEach((field: ProfileFieldDefType) => {
+              if (field.type === 'date' && formValues.fields[field.key]) {
+                formValues.fields[field.key] = dayjs(formValues.fields[field.key]);
+              }
+            });
+          }
           
           form.setFieldsValue(formValues);
         }
