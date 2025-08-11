@@ -135,7 +135,7 @@ const PeopleList: React.FC = () => {
   };
 
   const getPersonTags = (tagIds: string[]) => {
-    return tags.filter(tag => tagIds.includes(tag._id));
+    return tags.filter(tag => tagIds?.includes(tag._id));
   };
 
   const handleStatusChange = async (personId: string, newStatus: string) => {
