@@ -51,17 +51,31 @@ const TagsPage: React.FC = () => {
         Person.list(),
       ]);
 
+      console.log('Tags response:', tagsResponse);
+      console.log('People response:', peopleResponse);
+
       if (tagsResponse.success && peopleResponse.success) {
-        const tagsData = Array.isArray(tagsResponse.data) ? tagsResponse.data : [tagsResponse.data];
-        const peopleData = Array.isArray(peopleResponse.data) ? peopleResponse.data : [peopleResponse.data];
+        const tagsData = Array.isArray(tagsResponse.data) ? tagsResponse.data : (tagsResponse.data ? [tagsResponse.data] : []);
+        const peopleData = Array.isArray(peopleResponse.data) ? peopleResponse.data : (peopleResponse.data ? [peopleResponse.data] : []);
+        
+        console.log('Tags data:', tagsData);
+        console.log('People data:', peopleData);
         
         // Count people for each tag
         const tagsWithCounts = tagsData.map(tag => {
-          const peopleCount = peopleData.filter(person => person.tagIds.includes(tag._id)).length;
+          const peopleCount = peopleData.filter(person => person.tagIds && person.tagIds.includes(tag._id)).length;
           return { ...tag, peopleCount };
         });
         
         setTags(tagsWithCounts.sort((a, b) => b.peopleCount - a.peopleCount));
+      } else {
+        console.log('API responses not successful:', { tagsResponse, peopleResponse });
+        if (!tagsResponse.success) {
+          message.error('Failed to load tags: ' + (tagsResponse.message || 'Unknown error'));
+        }
+        if (!peopleResponse.success) {
+          message.error('Failed to load people: ' + (peopleResponse.message || 'Unknown error'));
+        }
       }
     } catch (error) {
       console.error('Failed to fetch tags:', error);
