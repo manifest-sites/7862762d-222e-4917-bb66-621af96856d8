@@ -1,0 +1,21 @@
+{
+  "name": "Organization",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the organization/church"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the organization was created"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the organization was last updated"
+    }
+  },
+  "required": ["name"]
+}

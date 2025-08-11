@@ -1,0 +1,62 @@
+{
+  "name": "ProfileFieldDef",
+  "type": "object",
+  "properties": {
+    "organizationId": {
+      "type": "string",
+      "description": "ID of the organization"
+    },
+    "key": {
+      "type": "string",
+      "description": "Slug-safe unique key for the field"
+    },
+    "label": {
+      "type": "string",
+      "description": "Display label for the field"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["text", "textarea", "number", "date", "checkbox", "select", "multiselect", "email", "phone", "url"],
+      "description": "Type of the field"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": { "type": "string" },
+          "label": { "type": "string" }
+        }
+      },
+      "description": "Options for select/multiselect fields"
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Whether the field is required"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": ["public", "staff_only"],
+      "description": "Who can see this field"
+    },
+    "archived": {
+      "type": "boolean",
+      "description": "Whether the field is archived"
+    },
+    "orderIndex": {
+      "type": "number",
+      "description": "Order of the field in forms"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the field was created"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the field was last updated"
+    }
+  },
+  "required": ["organizationId", "key", "label", "type", "orderIndex"]
+}

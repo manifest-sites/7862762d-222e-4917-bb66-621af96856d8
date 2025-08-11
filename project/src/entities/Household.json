@@ -1,0 +1,25 @@
+{
+  "name": "Household",
+  "type": "object",
+  "properties": {
+    "organizationId": {
+      "type": "string",
+      "description": "ID of the organization"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the household"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the household was created"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the household was last updated"
+    }
+  },
+  "required": ["organizationId", "name"]
+}
